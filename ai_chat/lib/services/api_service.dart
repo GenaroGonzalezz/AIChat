@@ -9,24 +9,31 @@ import 'package:http/http.dart' as http;
 
 class ApiService {
   static Future<List<ModelsModel>> getModels() async {
+    //TODO Poner tipo de dato List<ModelsModel>
     try {
-      var response = await http.get(Uri.parse("$BASE_URL/models"),
-          headers: {'Authorization': 'Bearer $API_KEY'});
+      var response = await http.get(Uri.parse("$BASE_URL/models"), headers: {
+        'Authorization': 'Bearer $API_KEY',
+        "Content-Type": "application/json",
+      });
 
-      Map jsonResponse = jsonDecode(response.body);
+      Map<dynamic, dynamic> jsonResponse = jsonDecode(response.body);
       if (jsonResponse['error'] != null) {
         // print("jsonResponse['error'] ${jsonResponse['error']["message"]}");
-        throw HttpException(jsonResponse['error']['message']);
+        throw HttpException(
+            "Message: ${jsonResponse['error']['message']} - Type: ${jsonResponse['error']['type']}");
       }
-      // print("jsonResponse $jsonResponse");
-      List temp = [];
+      print("jsonResponse $jsonResponse");
+      List<dynamic> temp = [];
       for (var value in jsonResponse["data"]) {
         temp.add(value);
         log("temp ${value["id"]}");
       }
-      return ModelsModel.modelsFromSnapshot(temp);
+      // log("Jeje ${ModelsModel.modelsFromSnapshot(temp).toString()}");
+      // return jsonResponse;
+      return ModelsModel.modelsFromSnapshot(
+          temp); //TODO Retornar el ModelsModel
     } catch (error) {
-      log('Error: $error');
+      // log('Error: ${error.toString()}');
       rethrow;
     }
   }

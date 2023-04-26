@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
@@ -66,91 +68,109 @@ class _ChatScreenState extends State<ChatScreen> {
                       const Icon(Icons.more_vert_rounded, color: Colors.white)),
             ]),
         body: SafeArea(
-          child: Column(
+          child: Stack(
             children: [
-              Flexible(
-                child: ListView.builder(
-                    itemCount: chatMessages.length,
-                    itemBuilder: (context, index) {
-                      return ChatWidget(
-                        msg: chatMessages[index]["msg"].toString(),
-                        chatIndex: int.parse(
-                            chatMessages[index]["chatIndex"].toString()),
-                      );
-                    }),
-              ),
-
-              const SizedBox(
-                height: 5,
-              ),
-              if (_isTyping) ...[
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: const [
-                    SpinKitPulse(color: Colors.white, size: 18),
-                    SpinKitPulse(color: Colors.white, size: 18)
-                  ],
-                )
-              ],
-              // Padding(
-              //   padding: const EdgeInsets.all(8.0),
-              //   child: TextField(decoration: InputDecoration(
-              //     suffixIcon: IconButton(onPressed: (){
-
-              //       print('Enviar');
-              //       setState(() {
-
-              //       });
-              //       }, icon: const Icon(Icons.send))
-              //   )),
+              Container(
+              // decoration: BoxDecoration(
+              //   borderRadius: BorderRadius.circular(20),
+              //   color: cardColor,
+              //   boxShadow: [
+              //     BoxShadow(
+              //       color: Colors.grey.withOpacity(0.2),
+              //       spreadRadius: 5,
+              //       blurRadius: 7,
+              //       offset: const Offset(0, 3),
+              //     ),
+              //   ],
               // ),
-              const SizedBox(
-                height: 5,
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Material(
-                  borderRadius: BorderRadius.circular(18),
-                  color: cardColor,
-                  elevation: 2,
-                  child: Padding(
-                    padding: const EdgeInsets.only(left: 10),
-                    child: Row(
-                      children: [
-                        Expanded(
-                          child: TextField(
-                            cursorHeight: 30,
-                            showCursor: false,
-                            style: const TextStyle(
-                              color: Colors.white,
-                            ),
-                            controller: textEditingController,
-                            onSubmitted: (value) {
-                              //TODO send message
-                            },
-                            decoration: const InputDecoration.collapsed(
-                              hintText: 'How can I help you?',
-                              hintStyle: TextStyle(color: Colors.grey),
-                            ),
-                          ),
-                        ),
-                        IconButton(
-                          onPressed: () async {
-                            try {
-                              await ApiService.getModels();
-                            } catch (e) {
-                              print('Error: $e');
-                            }
-                          },
-                          icon: const Icon(
-                            Icons.send,
-                            color: Colors.white,
-                          ),
-                        ),
+              child: Column(
+                children: [
+                  Flexible(
+                    child: ListView.builder(
+                        itemCount: chatMessages.length,
+                        itemBuilder: (context, index) {
+                          return ChatWidget(
+                            msg: chatMessages[index]["msg"].toString(),
+                            chatIndex: int.parse(
+                                chatMessages[index]["chatIndex"].toString()),
+                          );
+                        }),
+                  ),
+
+                  const SizedBox(
+                    height: 5,
+                  ),
+                  if (_isTyping) ...[
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: const [
+                        SpinKitPulse(color: Colors.white, size: 18),
+                        SpinKitPulse(color: Colors.white, size: 18)
                       ],
+                    )
+                  ],
+                  // Padding(
+                  //   padding: const EdgeInsets.all(8.0),
+                  //   child: TextField(decoration: InputDecoration(
+                  //     suffixIcon: IconButton(onPressed: (){
+
+                  //       print('Enviar');
+                  //       setState(() {
+
+                  //       });
+                  //       }, icon: const Icon(Icons.send))
+                  //   )),
+                  // ),
+                  const SizedBox(
+                    height: 5,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Material(
+                      borderRadius: BorderRadius.circular(18),
+                      color: cardColor,
+                      elevation: 2,
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 10),
+                        child: Row(
+                          children: [
+                            Expanded(
+                              child: TextField(
+                                cursorHeight: 30,
+                                showCursor: false,
+                                style: const TextStyle(
+                                  color: Colors.white,
+                                ),
+                                controller: textEditingController,
+                                onSubmitted: (value) {
+                                  //TODO send message
+                                },
+                                decoration: const InputDecoration.collapsed(
+                                  hintText: 'How can I help you?',
+                                  hintStyle: TextStyle(color: Colors.grey),
+                                ),
+                              ),
+                            ),
+                            IconButton(
+                              onPressed: () async {
+                                try {
+                                  await ApiService.getModels();
+                                } catch (e) {
+                                  log('El Error: $e');
+                                }
+                              },
+                              icon: const Icon(
+                                Icons.send,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
                     ),
                   ),
-                ),
+                ],
+              ),
               ),
             ],
           ),
