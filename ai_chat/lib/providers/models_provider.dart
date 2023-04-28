@@ -4,7 +4,7 @@ import '../models/models_model.dart';
 import '../services/api_service.dart';
 
 class ModelsProvider with ChangeNotifier {
-  String currentModel = 'babbage';
+  String currentModel = 'text-davinci-003';
   String get getCurrentModel {
     return currentModel;
   }

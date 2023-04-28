@@ -15,11 +15,12 @@ class ModelsDropdownWidget extends StatefulWidget {
 }
 
 class _ModelsDropdownWidgetState extends State<ModelsDropdownWidget> {
-  String currentModel = "babbage";
+  String? currentModel;
 
   @override
   Widget build(BuildContext context) {
-    final modelsProvider = Provider.of<ModelsProvider>(context);
+    final modelsProvider = Provider.of<ModelsProvider>(context, listen: false);
+    currentModel = modelsProvider.getCurrentModel;
     return FutureBuilder<List<ModelsModel>>(
         future: modelsProvider.getAllModels(),
         builder: (context, snapshot) {
@@ -29,32 +30,33 @@ class _ModelsDropdownWidgetState extends State<ModelsDropdownWidget> {
           return snapshot.data == null || snapshot.data!.isEmpty
               ? const SizedBox.shrink()
               : Expanded(
-                child: DropdownButton(
-                  isExpanded: true,
-                  // underline: SizedBox.shrink(),
-                  borderRadius: BorderRadius.circular(16),
-                  dropdownColor: theScaffoldBackgroundColor,
-                  iconEnabledColor: Colors.white,
-                  style: const TextStyle(
-                    color: Colors.white,
+                  child: DropdownButton(
+                    isExpanded: true,
+                    // underline: SizedBox.shrink(),
+                    borderRadius: BorderRadius.circular(16),
+                    dropdownColor: theScaffoldBackgroundColor,
+                    iconEnabledColor: Colors.white,
+                    style: const TextStyle(
+                      color: Colors.white,
+                    ),
+                    items: List<DropdownMenuItem<String>>.generate(
+                        snapshot.data!.length,
+                        (index) => DropdownMenuItem(
+                            value: snapshot.data![index].id,
+                            child: TextWidget(
+                              label: snapshot.data![index].id,
+                              fontSize: 15,
+                            ))),
+                    value: currentModel,
+                    onChanged: (value) {
+                      setState(() {
+                        currentModel = value.toString();
+                        print('Modelo Actual: $currentModel');
+                      });
+                      modelsProvider.setCurrentModel = value.toString();
+                    },
                   ),
-                  items: List<DropdownMenuItem<String>>.generate(
-                      snapshot.data!.length,
-                      (index) => DropdownMenuItem(
-                          value: snapshot.data![index].id,
-                          child: TextWidget(
-                            label: snapshot.data![index].id,
-                            fontSize: 15,
-                          ))),
-                  value: currentModel,
-                  onChanged: (value) {
-                    setState(() {
-                      currentModel = value.toString();
-                      print(currentModel);
-                    });
-                  },
-                ),
-              );
+                );
         });
   }
 }

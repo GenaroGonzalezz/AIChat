@@ -1,3 +1,4 @@
+import 'package:ai_chat/providers/chats_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -15,6 +16,7 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => ModelsProvider()),
+        ChangeNotifierProvider(create: (_) => ChatsProvider())
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
