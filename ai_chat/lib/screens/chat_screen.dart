@@ -3,8 +3,9 @@ import 'dart:developer';
 
 import 'package:ai_chat/providers/chats_provider.dart';
 import 'package:ai_chat/providers/models_provider.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
 import '../constants/constants.dart';
@@ -75,9 +76,19 @@ class _ChatScreenState extends State<ChatScreen> {
               elevation: 2,
               leading: Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: Image.asset(AssetsManager.openAiLogo3),
+                child: ClipRRect(
+                  borderRadius: const BorderRadius.all(Radius.circular(20)),
+                  child: Image.asset(AssetsManager.openAiLogo3)),
               ),
-              title: const Text('ChatGPT'),
+              title: Row(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: const [
+                  Text(
+                    'AI Chat',
+                    // style: GoogleFonts.poppins(),
+                  ),
+                ],
+              ),
               actions: [
                 IconButton(
                     onPressed: () {
@@ -134,7 +145,11 @@ class _ChatScreenState extends State<ChatScreen> {
                     Padding(
                       padding: const EdgeInsets.all(10.0),
                       child: Material(
-                        borderRadius: BorderRadius.circular(18),
+                        borderRadius: const BorderRadius.only(
+                            topLeft: Radius.circular(18),
+                            bottomLeft: Radius.circular(18),
+                            topRight: Radius.circular(30),
+                            bottomRight: Radius.circular(30)),
                         color: cardColor,
                         elevation: 6,
                         child: Padding(
@@ -143,6 +158,7 @@ class _ChatScreenState extends State<ChatScreen> {
                             children: [
                               Expanded(
                                 child: TextField(
+                                  textCapitalization: TextCapitalization.sentences,
                                   // focusNode: focusNode,
                                   onChanged: (value) {
                                     setState(() {
@@ -177,23 +193,50 @@ class _ChatScreenState extends State<ChatScreen> {
                                   ),
                                 ),
                               ),
-                              IconButton(
-                                onPressed: !_isEnabled
-                                    ? null
-                                    : () async {
-                                        scrollDown();
-                                        FocusManager.instance.primaryFocus
-                                            ?.unfocus();
+                              Padding(
+                                padding: const EdgeInsets.all(6.0),
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    color: cardColor,
+                                    borderRadius: const BorderRadius.all(
+                                        Radius.circular(30)),
+                                    // shape: BoxShape.rectangle,
+                                    boxShadow: [
+                                      // Shadow for top-left corner
+                                      BoxShadow(
+                                        color: Colors.grey[900]!,
+                                        offset: const Offset(4.0, 4.0),
+                                        blurRadius: 6.0,
+                                        spreadRadius: 1,
+                                      ),
+                                      // Shadow for bottom-right corner
+                                      const BoxShadow(
+                                        color: Color(0xFF5A5A5A),
+                                        offset: Offset(-5, -3),
+                                        blurRadius: 4,
+                                        spreadRadius: 1,
+                                      ),
+                                    ],
+                                  ),
+                                  child: IconButton(
+                                    onPressed: !_isEnabled
+                                        ? null
+                                        : () async {
+                                            scrollDown();
+                                            FocusManager.instance.primaryFocus
+                                                ?.unfocus();
 
-                                        await sendMessage(
-                                            modelsProvider: modelsProvider,
-                                            chatsProvider: chatsProvider);
-                                      },
-                                icon: Icon(
-                                  Icons.send,
-                                  color: !_isEnabled
-                                      ? Colors.grey
-                                      : Colors.white,
+                                            await sendMessage(
+                                                modelsProvider: modelsProvider,
+                                                chatsProvider: chatsProvider);
+                                          },
+                                    icon: Icon(
+                                      Icons.send,
+                                      color: !_isEnabled
+                                          ? Colors.grey
+                                          : Colors.teal[400],
+                                    ),
+                                  ),
                                 ),
                               ),
                             ],

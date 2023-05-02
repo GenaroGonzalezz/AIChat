@@ -15,17 +15,13 @@ class TextWidget extends StatelessWidget {
   final Color? color;
   final FontWeight? fontWeight;
 
-
   @override
   Widget build(BuildContext context) {
-    return Text(
-      label,
-
-      style: TextStyle(
-        color: color ?? Colors.white,
-        fontSize: fontSize,
-        fontWeight: fontWeight ?? FontWeight.w400
-      )
-    );
+    return Text(label,
+        textAlign: TextAlign.justify,
+        style: TextStyle(
+            color: color ?? Colors.white,
+            fontSize: fontSize,
+            fontWeight: fontWeight ?? FontWeight.w400));
   }
 }

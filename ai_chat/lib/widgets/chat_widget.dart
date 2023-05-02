@@ -22,116 +22,101 @@ class ChatWidget extends StatelessWidget {
       children: [
         Padding(
           padding: const EdgeInsets.all(8.0),
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(18),
+          child: Container(
+            decoration: const BoxDecoration(),
+            // borderRadius: BorderRadius.circular(18),
             child: Material(
-              color: chatIndex == 0 ? theScaffoldBackgroundColor : cardColor,
+              color: theScaffoldBackgroundColor,
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: Row(
-                    // crossAxisAlignment: CrossAxisAlignment.end,
-                    // mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      chatIndex == 0
-                          ? Expanded(
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                children: [
-                                  Flexible(
-                                      fit: FlexFit.loose,
-                                      child: TextWidget(
-                                        label: msg,
-                                      )),
-                                  const SizedBox(width: 10),
-                                  Material(
-                                    color: Colors.white54,
-                                    borderRadius: BorderRadius.circular(28),
-                                    child: Image.asset(
-                                      AssetsManager.userImage,
-                                      width: deviceData.width * 0.11,
-                                      height: deviceData.height * 0.05,
-                                    ),
+                child: Row(children: [
+                  chatIndex == 0
+                      ? Expanded(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              Flexible(
+                                  fit: FlexFit.loose,
+                                  child: TextWidget(
+                                    label: msg,
+                                  )),
+                              const SizedBox(width: 10),
+                              Material(
+                                color: Colors.white54,
+                                borderRadius: BorderRadius.circular(28),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(3.0),
+                                  child: Image.asset(
+                                    AssetsManager.human,
+                                    width: deviceData.width * 0.11,
+                                    height: deviceData.height * 0.05,
                                   ),
-                                ],
+                                ),
                               ),
-                            )
-                          : Expanded(
-                              child: Container(
-                                // decoration: BoxDecoration(
-                                //   color: theScaffoldBackgroundColor,
-                                //   borderRadius: BorderRadius.circular(24),
-                                //   boxShadow: [
-                                //   // Shadow for top-left corner
-                                //   BoxShadow(
-                                //     color: theScaffoldBackgroundColor,
-                                //     offset: Offset(10, 10),
-                                //     blurRadius: 30,
-                                //     spreadRadius: 1,
-                                //   ),
-                                //   // Shadow for bottom-right corner
-                                //   BoxShadow(
-                                //     color: theScaffoldBackgroundColor,
-                                //     offset: Offset(-10, -10),
-                                //     blurRadius: 30,
-                                //     spreadRadius: 1,
-                                //   ),
-                                // ]),
-                                child: Row(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Material(
-                                      color: Colors.white38,
-                                      borderRadius: BorderRadius.circular(28),
+                            ],
+                          ),
+                        )
+                      : Expanded(
+                          child: Container(
+                            decoration: BoxDecoration(
+                              color: theScaffoldBackgroundColor,
+                              borderRadius:
+                                  const BorderRadius.all(Radius.circular(30)),
+                              // shape: BoxShape.rectangle,
+                              boxShadow: [
+                                // Shadow for top-left corner
+                                BoxShadow(
+                                  color: Colors.grey[900]!,
+                                  offset: const Offset(8.0, 5.0),
+                                  blurRadius: 15.0,
+                                  spreadRadius: 1,
+                                ),
+                                // Shadow for bottom-right corner
+                                const BoxShadow(
+                                  color: Color(0xFF444444),
+                                  offset: Offset(-10, -8),
+                                  blurRadius: 14,
+                                  spreadRadius: 1,
+                                ),
+                              ],
+                            ),
+                            child: Stack(
+                              // crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.all(10.0),
+                                  child: Material(
+                                    color: Colors.white38,
+                                    borderRadius: BorderRadius.circular(28),
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(3.0),
                                       child: Image.asset(
-                                        AssetsManager.openAiLogo,
+                                        AssetsManager.theia,
                                         width: deviceData.width * 0.11,
                                         height: deviceData.height * 0.05,
                                       ),
                                     ),
-                                    const SizedBox(width: 10),
-                                    Expanded(
-                                        child:
-                                            // chatIndex == 0
-                                            //     ?
-
-                                            TextWidget(
-                                      label: msg,
-                                    )
-                                        // :
-                                        // DefaultTextStyle(
-                                        //   style: const TextStyle(
-                                        //     color: Colors.white,
-                                        //     fontWeight: FontWeight.w400,
-                                        //     fontSize:16,
-                                        //   ),
-                                        //   child: AnimatedTextKit(
-                                        //     isRepeatingAnimation: false,
-                                        //     displayFullTextOnTap: true,
-                                        //     repeatForever: false,
-                                        //     totalRepeatCount: 1,
-                                        //       animatedTexts: [
-                                        //         TyperAnimatedText(
-                                        //           msg.trim(),
-                                        //         )
-                                        //       ],
-                                        //     ),
-                                        // ),
-                                        ),
-                                  ],
+                                  ),
                                 ),
-                              ),
+                                const SizedBox(width: 10),
+                                Expanded(
+                                  child: Padding(
+                                    padding: EdgeInsets.all(30),
+                                    // padding: EdgeInsets.only(right: deviceData.width/18, bottom: deviceData.height/30),
+                                    child: Column(
+                                      children: [
+                                        TextWidget(
+                                          label: msg,
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ],
                             ),
-
-                      // chatIndex == 0
-                      //     ? SizedBox.shrink()
-                      //     : Row(
-                      //       mainAxisAlignment: MainAxisAlignment.end,
-                      //       mainAxisSize: MainAxisSize.min,
-                      //       children: const[
-                      //         Icon(Icons.thumb_up_alt_outlined, color: Colors.white,),
-                      //         Icon(Icons.thumb_down_alt_outlined, color: Colors.white,),
-                      //       ]),
-                    ]),
+                          ),
+                        ),
+                ]),
               ),
             ),
           ),

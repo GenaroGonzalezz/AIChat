@@ -6,4 +6,7 @@ static String botImage = "$imagePath/learn.png";
 static String openAiLogo = "$imagePath/oai.png";
 static String openAiLogo2 = "$imagePath/logoAI.png";
 static String openAiLogo3 = "$imagePath/openai_logo.jpg";
+static String human = "$imagePath/human.png";
+static String theia = "$imagePath/theia.png";
+
 }
