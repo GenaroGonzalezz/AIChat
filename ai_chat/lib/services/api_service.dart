@@ -5,6 +5,7 @@ import 'dart:io';
 import 'package:ai_chat/constants/constants.dart';
 import 'package:ai_chat/models/models_model.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
 
 import '../models/chat_models.dart';
@@ -16,7 +17,7 @@ class ApiService {
     //TODO Poner tipo de dato List<ModelsModel>
     try {
       var response = await http.get(Uri.parse("$BASE_URL/models"), headers: {
-        'Authorization': 'Bearer $API_KEY',
+        'Authorization': "Bearer $dotenv.env['API_KEY']",
         "Content-Type": "application/json",
       });
 
@@ -49,7 +50,7 @@ class ApiService {
       var response = await http.post(
         Uri.parse("$BASE_URL/completions"),
         headers: {
-          'Authorization': 'Bearer $API_KEY',
+          'Authorization': 'Bearer $dotenv.env["API_KEY"]',
           "Content-Type": "application/json",
         },
         body: jsonEncode(

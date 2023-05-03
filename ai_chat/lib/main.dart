@@ -1,12 +1,21 @@
 import 'package:ai_chat/providers/chats_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:provider/provider.dart';
 
 import 'constants/colors.dart';
 import 'providers/models_provider.dart';
 import 'screens/chat_screen.dart';
 
-void main() => runApp(const MyApp());
+void main() async {
+  WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
+  FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
+  await dotenv.load();
+  runApp(const MyApp());
+
+  FlutterNativeSplash.remove();
+}
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});

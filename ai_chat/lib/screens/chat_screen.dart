@@ -78,13 +78,13 @@ class _ChatScreenState extends State<ChatScreen> {
                 padding: const EdgeInsets.all(8.0),
                 child: ClipRRect(
                   borderRadius: const BorderRadius.all(Radius.circular(20)),
-                  child: Image.asset(AssetsManager.openAiLogo3)),
+                  child: Image.asset(AssetsManager.theIcon)),
               ),
               title: Row(
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: const [
                   Text(
-                    'AI Chat',
+                    '',
                     // style: GoogleFonts.poppins(),
                   ),
                 ],
